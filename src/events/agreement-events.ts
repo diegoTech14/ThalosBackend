@@ -8,10 +8,11 @@ import type {
   MilestoneApprovedData,
 } from "../notifications/types/notification-data.types";
 
-export const AgreementEventNames = {
-  AgreementCreated: "agreement.created",
-  AgreementFunded: "agreement.funded",
-  AgreementCompleted: "agreement.completed",
+/** Central registry of agreement domain event names. */
+export const AgreementEventName = {
+  Created: "agreement.created",
+  Funded: "agreement.funded",
+  Completed: "agreement.completed",
   EvidenceSubmitted: "evidence.submitted",
   MilestoneApproved: "milestone.approved",
   DisputeOpened: "dispute.opened",
@@ -19,14 +20,18 @@ export const AgreementEventNames = {
 } as const;
 
 export type AgreementEventName =
-  (typeof AgreementEventNames)[keyof typeof AgreementEventNames];
+  (typeof AgreementEventName)[keyof typeof AgreementEventName];
 
-export interface AgreementEventMap {
-  [AgreementEventNames.AgreementCreated]: AgreementCreatedData;
-  [AgreementEventNames.AgreementFunded]: AgreementFundedData;
-  [AgreementEventNames.AgreementCompleted]: AgreementCompletedData;
-  [AgreementEventNames.EvidenceSubmitted]: EvidenceSubmittedData;
-  [AgreementEventNames.MilestoneApproved]: MilestoneApprovedData;
-  [AgreementEventNames.DisputeOpened]: DisputeOpenedData;
-  [AgreementEventNames.DisputeResolved]: DisputeResolvedData;
-}
+/** Maps each event name to its payload type (notification data interfaces). */
+export type AgreementEventPayloadMap = {
+  [AgreementEventName.Created]: AgreementCreatedData;
+  [AgreementEventName.Funded]: AgreementFundedData;
+  [AgreementEventName.Completed]: AgreementCompletedData;
+  [AgreementEventName.EvidenceSubmitted]: EvidenceSubmittedData;
+  [AgreementEventName.MilestoneApproved]: MilestoneApprovedData;
+  [AgreementEventName.DisputeOpened]: DisputeOpenedData;
+  [AgreementEventName.DisputeResolved]: DisputeResolvedData;
+};
+
+export type AgreementEventPayload<T extends AgreementEventName> =
+  AgreementEventPayloadMap[T];

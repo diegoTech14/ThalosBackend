@@ -1,6 +1,7 @@
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { EventEmitterModule } from "@nestjs/event-emitter";
 import { CommonModule } from "./common/common.module";
 import { AuthModule } from "./auth/auth.module";
 import { SupabaseModule } from "./supabase/supabase.module";
@@ -14,16 +15,12 @@ import { AgreementChatModule } from "./agreement-chat/agreement-chat.module";
 import { DisputesModule } from "./disputes/disputes.module";
 import { ProfilesModule } from "./profiles/profiles.module";
 import { WalletsModule } from "./wallets/wallets.module";
+import { EventsModule } from "./events/events.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    EventEmitterModule.forRoot({
-      delimiter: ".",
-      ignoreErrors: true,
-      maxListeners: 20,
-      wildcard: true,
-    }),
+    EventEmitterModule.forRoot(),
     CommonModule,
     SupabaseModule,
     AuthModule,
@@ -36,6 +33,7 @@ import { WalletsModule } from "./wallets/wallets.module";
     DisputesModule,
     ProfilesModule,
     WalletsModule,
+    EventsModule,
   ],
   controllers: [RootController],
 })
